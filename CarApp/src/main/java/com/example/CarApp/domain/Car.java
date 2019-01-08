@@ -1,10 +1,16 @@
 package com.example.CarApp.domain;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 @Entity
 public class Car {
@@ -12,6 +18,13 @@ public class Car {
 	      @JoinColumn(name = "owner")
 	      private Owner owner;
 
+	   @ManyToMany(cascade = CascadeType.MERGE)
+	    @JoinTable(name = "car_trip", joinColumns =
+	        { @JoinColumn(name = "id") },
+	        inverseJoinColumns = { @JoinColumn(name = "tripId") })
+	    private Set<Trip> trips = new HashSet<Trip>(0);
+	   
+	   
 	      //Getter and setter
 	      public Owner getOwner() {
 	        return owner;
