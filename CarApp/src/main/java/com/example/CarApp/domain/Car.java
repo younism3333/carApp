@@ -12,17 +12,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 public class Car {
 	   @ManyToOne(fetch = FetchType.LAZY)
-	      @JoinColumn(name = "owner")
+	   @JoinColumn(name = "owner")
+	   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	      private Owner owner;
 
-	   @ManyToMany(cascade = CascadeType.MERGE)
-	    @JoinTable(name = "car_trip", joinColumns =
-	        { @JoinColumn(name = "id") },
-	        inverseJoinColumns = { @JoinColumn(name = "tripId") })
-	    private Set<Trip> trips = new HashSet<Trip>(0);
+//	   @ManyToMany(cascade = CascadeType.MERGE)
+//	    @JoinTable(name = "car_trip", joinColumns =
+//	        { @JoinColumn(name = "id") },
+//	        inverseJoinColumns = { @JoinColumn(name = "tripId") })
+//	    private Set<Trip> trips = new HashSet<Trip>(0);
 	   
 	   
 	      //Getter and setter
@@ -91,5 +94,6 @@ public class Car {
 		this.price = price;
 		this.owner=owner3;
 	}
+	public Car() {}
 	
 }
